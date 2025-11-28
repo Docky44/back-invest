@@ -1,0 +1,24 @@
+scalar JSON
+scalar Upload
+
+enum Role {
+  USER
+  ADMIN
+}
+
+type User {
+  id: ID!
+  auth0Sub: String!
+  username: String!
+  email: String
+  isActive: Boolean!
+  role: Role!
+  createdAt: String!
+  updatedAt: String!
+  lastLoginAt: String
+}
+
+type Query {
+  me: User!
+  users: [User!]!
+}
