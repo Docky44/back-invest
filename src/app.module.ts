@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common'
-import { ConfigModule, ConfigService } from '@nestjs/config'
+import { ConfigModule } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { GraphQLModule } from '@nestjs/graphql'
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
@@ -23,6 +23,7 @@ import { UserModule } from './modules/users/user.module'
       driver: ApolloDriver,
       typePaths: ['./**/*.graphql'],
       resolvers: { JSON: GraphQLJSON, Upload: GraphQLUpload },
+      introspection: true,
       playground: false,
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
       context: ({ req, res }) => ({ req, res })
