@@ -8,23 +8,20 @@ import GraphQLJSON from 'graphql-type-json'
 import { GraphQLUpload } from 'graphql-upload-minimal'
 import { AuthModule } from './auth/auth.module'
 import { UserModule } from './modules/users/user.module'
-import { User } from './modules/users/user.entity'
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    TypeOrmModule.forRootAsync({
-      inject: [ConfigService],
-      useFactory: (config: ConfigService) => ({
-        type: 'postgres',
-        url: config.get<string>('DATABASE_URL'),
-        entities: [User],
-        synchronize: true
-      })
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      url: process.env.DATABASE_URL,
+      autoLoadEntities: true,
+      synchronize: false,
+      ssl: { rejectUnauthorized: false }
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      typePaths: ['./src/**/*.graphql'],
+      typePaths: ['./**/*.graphql'],
       resolvers: { JSON: GraphQLJSON, Upload: GraphQLUpload },
       playground: false,
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
