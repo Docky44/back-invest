@@ -1,0 +1,26 @@
+name: Notify Discord on push
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm ci
+      - run: npx ts-node src/notify.ts
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          REPO: ${{ github.repository }}
+          REF: ${{ github.ref }}
+          COMPARE: ${{ github.event.compare }}
+          GITHUB_EVENT_PATH: ${{ github.event_path }}
