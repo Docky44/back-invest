@@ -19,7 +19,7 @@ jobs:
       - run: npm ci
       - run: npx ts-node src/notify.ts
         env:
-          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL || '' }}
           REPO: ${{ github.repository }}
           REF: ${{ github.ref }}
           COMPARE: ${{ github.event.compare }}
