@@ -52,18 +52,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     const nameClaim = findClaim(payload.name, '/name')
     const nicknameClaim = findClaim(payload.nickname, '/nickname')
 
-    console.log('JWT payload', payload)
-
     const user = await this.userService.ensureUserFromAuth0Profile({
       sub: payload.sub,
       nickname: nicknameClaim,
       name: nameClaim,
       email: emailClaim
     })
-
-    if (!user.isActive) {
-      throw new Error('USER_INACTIVE')
-    }
 
     return user
   }

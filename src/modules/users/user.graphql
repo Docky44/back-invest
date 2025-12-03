@@ -22,3 +22,8 @@ type Query {
   me: User!
   users: [User!]!
 }
+
+type Mutation {
+  updateUserStatus(id: ID!, isActive: Boolean!): User!
+  updateUserRole(id: ID!, role: Role!): User!
+}

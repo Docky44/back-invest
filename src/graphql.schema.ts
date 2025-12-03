@@ -31,6 +31,12 @@ export abstract class IQuery {
     abstract users(): User[] | Promise<User[]>;
 }
 
+export abstract class IMutation {
+    abstract updateUserStatus(id: string, isActive: boolean): User | Promise<User>;
+
+    abstract updateUserRole(id: string, role: Role): User | Promise<User>;
+}
+
 export type JSON = any;
 export type Upload = any;
 type Nullable<T> = T | null;
